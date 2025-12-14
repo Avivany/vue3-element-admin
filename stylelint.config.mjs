@@ -5,7 +5,8 @@ export default {
     //扩展 stylelint-config-recommended 共享配置并为 SCSS 配置其规则
     'stylelint-config-recommended-scss',
     //扩展 stylelint-config-recommended 共享配置并为 Vue 配置其规则
-    'stylelint-config-recommended-vue/scss',
+    'stylelint-config-standard-vue',
+    'stylelint-config-recommended-vue',
     //html配置（支持很多类型文件，具体看源码）
     'stylelint-config-html/vue',
     //属性排序配置
@@ -46,5 +47,7 @@ export default {
     'at-rule-no-unknown': null,
     //启用 SCSS 特定的 at-rule 检查
     'scss/at-rule-no-unknown': true,
+    // 禁止未知属性
+    'property-no-unknown': null,
   },
 }

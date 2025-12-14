@@ -2,7 +2,7 @@
   "extends": "@vue/tsconfig/tsconfig.dom.json",
   "compilerOptions": {
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
-    "types": ["vite/client","element-plus/global"],
+    "types": ["vite/client", "element-plus/global"],
 
     /* Linting */
     "strict": true,
@@ -11,10 +11,16 @@
     "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true,
-    "baseUrl": "./",//默认当前目录
-    "paths": {  //路径映射
-      "@/*":["src/*"]
+    "baseUrl": "./", //默认当前目录
+    "paths": {
+      //路径映射
+      "@/*": ["src/*"]
     }
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue","src/vite-env.d.ts"]
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue",
+    "src/vite-env.d.ts"
+  ]
 }

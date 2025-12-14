@@ -1,10 +1,11 @@
 import { createApp } from 'vue'
 import './style.css'
 import App from './App.vue'
-import insts from '@/plugins';
+import insts from '@/plugins'
 //UnoCSS 配置
 import 'uno.css'
-import 'virtual:svg-icons-register';
-
+// 引入全局样式
+import '@/assets/styles/index.scss'
+import 'virtual:svg-icons-register'
 
 createApp(App).use(insts).mount('#app')
