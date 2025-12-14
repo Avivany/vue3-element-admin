@@ -1,5 +1,6 @@
 {
   "name": "vue3-element-admin",
+  "description": "Vite + Vue3 + TypeScript + Element-Plus + Unicss 中后台模板",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -11,7 +12,11 @@
     "lint:prettier": "prettier --write \"src/**/*.{js,cjs,ts,json,css,scss,vue,html,md}\"",
     "lint:stylelint": "stylelint  \"src/**/*.{css,scss,less,vue,html}\"",
     "lint:stylelint:fix": "stylelint  \"src/**/*.{css,scss,less,vue,html}\" --fix",
-    "prepare": "husky"
+    "lint:lint-staged": "lint-staged",
+    "lint": "pnpm run lint:eslint && pnpm run lint:prettier && pnpm lint:stylelint:fix",
+    "prepare": "husky",
+    "commit": "git-cz",
+    "preinstall": "npx only-allow pnpm"
   },
   "dependencies": {
     "@element-plus/icons-vue": "^2.3.2",
@@ -34,6 +39,7 @@
     "globals": "^16.5.0",
     "husky": "^9.1.7",
     "jiti": "^2.6.1",
+    "lint-staged": "^16.2.7",
     "postcss": "^8.5.6",
     "postcss-html": "^1.8.0",
     "postcss-scss": "^4.0.9",
@@ -54,5 +60,15 @@
     "vite": "^7.2.4",
     "vite-plugin-svg-icons": "^2.0.1",
     "vue-tsc": "^3.1.4"
-  }
+  },
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-git"
+    }
+  },
+  "engines": {
+    "node": "^20.19.0 || >=22.12.0"
+  },
+  "author": "Avivany",
+  "license": "MIT"
 }
