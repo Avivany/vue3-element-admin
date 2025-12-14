@@ -1,0 +1,18 @@
+# .stylelintignore
+dist
+test
+node_modules
+public
+.husky
+.vscode
+.idea
+*.sh
+*.md
+*.json
+*.woff
+*.ttf
+*.eot
+*.png
+*.jpg
+
+src/assets
