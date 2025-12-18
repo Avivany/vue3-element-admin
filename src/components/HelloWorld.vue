@@ -55,10 +55,13 @@ const count = ref(0)
       Danger
     </el-button>
     <el-button type="danger">
-      <i class="i-local-dev" />
+      <i-tabler-align-box-center-middle-filled />
       Danger
     </el-button>
     <span>{{ counterStore.double }}</span>
+    <i class="i-tabler-align-box-top-center"></i>
+    <i class="i-tabler:air-traffic-control"></i>
+    <i class="i-ep:failed"></i>
   </div>
 </template>
 
