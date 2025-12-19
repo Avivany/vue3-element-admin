@@ -13,7 +13,7 @@ import { FileSystemIconLoader } from '@iconify/utils/lib/loader/node-loaders'
 /**
  * 同步扫描本地 SVG 图标，生成 FileSystemIconLoader 配置
  */
-const svgDir = path.resolve(__dirname, 'src/assets/svg')
+const svgDir = path.resolve(__dirname, 'src/assets/svgs')
 const files = globbySync(['**/*.svg'], {
   cwd: svgDir, // 基于 svg 根目录匹配，
   onlyFiles: true,
@@ -57,10 +57,10 @@ const getLocalIconCollections = () => {
 // 同步生成本地图标集合
 const localIconCollections = getLocalIconCollections()
 // 同步生成安全列表
-const generateSafeList = () => {
+const generateSafeList = (): string[] => {
   try {
     const icons = localIcons()
-    return Object.keys(icons).flatMap((item) => icons[item])
+    return Object.keys(icons).flatMap((item) => icons[item]) as string[]
   } catch (error) {
     console.error('无法读取图标目录:', error)
     return []

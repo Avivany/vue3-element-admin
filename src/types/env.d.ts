@@ -4,28 +4,28 @@ interface ImportMetaEnv {
   /**
    * 应用标题
    */
-  VITE_APP_TITLE: string
+  readonly VITE_APP_TITLE: string
   /**
    * 应用端口
    */
-  VITE_APP_PORT: number
+  readonly VITE_APP_PORT: number
   /**
    * API基础路径(反向代理)
    */
-  VITE_APP_BASE_API: string
+  readonly VITE_APP_BASE_API: string
   /**
    * 接口地址
    */
-  VITE_APP_API_URL: string
+  readonly VITE_APP_API_URL: string
 
   /**
    * 是否启用Mock
    */
-  VITE_MOCK_DEV_SERVER?: boolean
+  readonly VITE_MOCK_DEV_SERVER?: boolean
 }
 
 interface ImportMeta {
-  readonly env: Readonly<ImportMetaEnv>
+  readonly env: ImportMetaEnv
 }
 
 /** 处理后的环境变量（全局可用） */

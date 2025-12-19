@@ -12,22 +12,28 @@ import IconsResolver from 'unplugin-icons/resolver'
 import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
 import UnoCSS from 'unocss/vite'
 
-// const pathSrc=resolve(__dirname,"scr");
+// 平台名称，版本。依赖提示
+import { name, version, dependencies, devDependencies } from './package.json'
+
+const __APP_INFO__ = {
+  pkg: { name, version, dependencies, devDependencies },
+  timesTamp: Date.now(),
+}
 
 // https://vite.dev/config/
 export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
   const env = loadEnv(mode, process.cwd())
-  // const isProd=mode==='production'
+  const isProd = mode === 'production'
   return {
     plugins: [
       vue(),
       UnoCSS(),
       AutoImport({
         resolvers: [
-          ElementPlusResolver(), //自动导入ElementPlus
+          ElementPlusResolver({ importStyle: 'sass' }), //自动导入ElementPlus
           IconsResolver({}), //自动导入图标组件
         ],
-        imports: ['vue'],
+        imports: ['vue', 'pinia', 'vue-router'],
         vueTemplate: true, //是否在vue模板自动导入
         dts: resolve(resolve(__dirname, 'src'), 'types', 'auto-imports.d.ts'), //自动导入组件类型声明文件位置，默认根目录
         eslintrc: {
@@ -39,11 +45,12 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
       }),
       Components({
         resolvers: [
-          ElementPlusResolver(),
+          ElementPlusResolver({ importStyle: 'sass' }),
           IconsResolver({
             enabledCollections: ['ep'], //ep图标库
           }),
         ],
+        dirs: ['src/components', 'src/**/components'],
         dts: resolve(resolve(__dirname, 'src'), 'types', 'components.d.ts'), //自动导入组件类型声明文件位置，默认默认根目录
       }),
       Icons({
@@ -67,7 +74,7 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
       open: false,
       proxy: {
         // 代理 /dev-api 的请求
-        [env.VITE_APP_BASE_API]: {
+        [env.VITE_APP_BASE_API as string]: {
           changeOrigin: true,
           target: env.VITE_APP_API_URL,
           rewrite: (path: string) => path.replace(new RegExp('^' + env.VITE_APP_BASE_API), ''),
@@ -82,6 +89,31 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
           additionalData: `@use "@/styles/variables.scss" as *;`,
         },
       },
+    },
+    optimizeDeps: {
+      include: ['vue', 'vue-router', 'pinia', '@vueuse/core', 'element-plus', 'axios'],
+    },
+    define: {
+      __APP_INFO__: JSON.stringify(__APP_INFO__),
+    },
+    build: {
+      // 触发警告的 chunk 大小。（以 kB 为单位）
+      chunkSizeWarningLimit: 2000,
+      // 设置为 false 可以禁用最小化混淆，或是用来指定使用哪种混淆器, 类型:boolean | 'oxc' | 'terser' | 'esbuild'
+      minify: isProd ? 'terser' : false,
+      terserOptions: isProd
+        ? {
+            compress: {
+              keep_infinity: true, // 防止 Infinity 被压缩成 1/0，这可能会导致 Chrome 上的性能问题
+              drop_console: true, // 生产环境去除 console.log, console.warn, console.error 等
+              drop_debugger: true, // 生产环境去除 debugger
+              pure_funcs: ['console.log', 'console.info'], // 移除指定的函数调用
+            },
+            format: {
+              comments: false, // 删除注释
+            },
+          }
+        : {},
     },
   }
 })
