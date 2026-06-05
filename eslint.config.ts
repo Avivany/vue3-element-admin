@@ -24,7 +24,13 @@ try {
 }
 
 export default defineConfig([
-  globalIgnores(['**/dist/**', '**/node_modules/**', '**/auto-imports.d.ts', '**/components.d.ts']),
+  globalIgnores([
+    '**/dist/**',
+    '**/node_modules/**',
+    '**/auto-imports.d.ts',
+    '**/components.d.ts',
+    '',
+  ]),
   {
     files: ['**/*.{js,mjs,cjs,ts,mts,cts,vue}'],
     plugins: { js },
@@ -60,9 +66,12 @@ export default defineConfig([
   tseslint.configs.recommended,
   pluginVue.configs['flat/essential'],
   //配置规则： https://eslint.vuejs.ac.cn/rules/
+  //Vue 配置
   {
     files: ['**/*.vue'],
-    languageOptions: { parserOptions: { parser: tseslint.parser } },
+    languageOptions: {
+      parserOptions: { parser: tseslint.parser, sourceType: 'module' },
+    },
     rules: {
       // 关闭组件命名规则
       'vue/multi-word-component-names': 'off',

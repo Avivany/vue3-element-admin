@@ -12,6 +12,9 @@ import IconsResolver from 'unplugin-icons/resolver'
 import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
 import UnoCSS from 'unocss/vite'
 
+//mock插件
+import { viteMockServe } from 'vite-plugin-mock'
+
 // 平台名称，版本。依赖提示
 import { name, version, dependencies, devDependencies } from './package.json'
 
@@ -23,17 +26,31 @@ const __APP_INFO__ = {
 // https://vite.dev/config/
 export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
   const env = loadEnv(mode, process.cwd())
+  console.log('mode', mode)
+  console.log('env', env)
   const isProd = mode === 'production'
   return {
     plugins: [
-      vue(),
-      UnoCSS(),
+      vue({
+        template: {
+          compilerOptions: {
+            isCustomElement: (tag) => tag.startsWith('i-'),
+          },
+        },
+      }),
+      viteMockServe({
+        mockPath: resolve(__dirname, './mock'),
+        enable: true, // 是否启用 mock 功能
+        logger: false, // 是否在控制台显示请求日志
+        ignore: /^_/, // 忽略下划线开头的文件
+      }),
+      UnoCSS({ configFile: './uno.config.ts' /*注意这里的后缀名*/ }),
       AutoImport({
         resolvers: [
           ElementPlusResolver({ importStyle: 'sass' }), //自动导入ElementPlus
           IconsResolver({}), //自动导入图标组件
         ],
-        imports: ['vue', 'pinia', 'vue-router'],
+        imports: ['vue', 'pinia', 'vue-router', '@vueuse/core'],
         vueTemplate: true, //是否在vue模板自动导入
         dts: resolve(resolve(__dirname, 'src'), 'types', 'auto-imports.d.ts'), //自动导入组件类型声明文件位置，默认根目录
         eslintrc: {
@@ -58,7 +75,7 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
       }),
       createSvgIconsPlugin({
         // 指定需要缓存的图标文件夹
-        iconDirs: [resolve(process.cwd(), 'src/assets/svgs')],
+        iconDirs: [resolve(process.cwd(), 'src/assets/svgs/sys')],
         // 指定symbolId格式
         symbolId: 'icon-[dir]-[name]',
       }),
@@ -66,6 +83,7 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
     resolve: {
       alias: {
         '@': resolve(__dirname, 'src'),
+        '@/styles': resolve(__dirname, 'src/common/styles'),
       },
     },
     server: {
@@ -86,12 +104,12 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
       preprocessorOptions: {
         // 定义global scss variable,全局共享的
         scss: {
-          additionalData: `@use "@/styles/variables.scss" as *;`,
+          additionalData: `@use "@/common/styles/index.scss" as *;`,
         },
       },
     },
     optimizeDeps: {
-      include: ['vue', 'vue-router', 'pinia', '@vueuse/core', 'element-plus', 'axios'],
+      include: ['vue', 'vue-router', 'pinia', '@vueuse/core', 'element-plus', 'axios', 'vue-i18n'],
     },
     define: {
       __APP_INFO__: JSON.stringify(__APP_INFO__),

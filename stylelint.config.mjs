@@ -8,7 +8,7 @@ export default {
     'stylelint-config-standard-vue',
     'stylelint-config-recommended-vue',
     //html配置（支持很多类型文件，具体看源码）
-    'stylelint-config-html/vue',
+    // 'stylelint-config-html/vue',
     //属性排序配置
     'stylelint-config-recess-order',
     //prettier配置
@@ -49,5 +49,15 @@ export default {
     'scss/at-rule-no-unknown': true,
     // 禁止未知属性
     'property-no-unknown': null,
+    //类名不允许下划线，默认kebab-case方式
+    'selector-class-pattern': null,
+    'scss/dollar-variable-pattern': null,
+    'property-no-vendor-prefix':[
+      true,
+      {
+        //忽略指定的前缀
+        ignoreProperties: ['appearance']
+      }
+    ]
   },
 }

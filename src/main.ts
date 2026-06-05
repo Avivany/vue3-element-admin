@@ -7,5 +7,11 @@ import 'uno.css'
 // 引入全局样式
 import '@/styles/index.scss'
 import 'virtual:svg-icons-register'
+//生产环境使用mock
+if (import.meta.env.MODE === 'production') {
+  import('./utils/mock-prod-server').then(({ setupProdMockServer }) => {
+    setupProdMockServer()
+  })
+}
 
 createApp(App).use(insts).mount('#app')

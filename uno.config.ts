@@ -2,6 +2,7 @@ import {
   defineConfig,
   presetIcons,
   presetWebFonts,
+  presetMini,
   presetTagify,
   transformerDirectives,
   transformerVariantGroup,
@@ -100,11 +101,13 @@ export default defineConfig({
         ...localIconCollections,
       },
     }),
+    presetMini(),
     presetWebFonts({}),
   ],
   // 安全列表
   safelist: generateSafeList(),
   shortcuts: {
+    'wh-full': 'w-full h-full',
     'flex-center': 'flex justify-center items-center',
     'flex-center-x': 'flex justify-center',
     'flex-center-y': 'flex items-center',

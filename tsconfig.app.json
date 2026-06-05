@@ -6,15 +6,16 @@
 
     /* Linting */
     "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "erasableSyntaxOnly": true,
-    "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true,
+    "noUnusedLocals": true, //在有未使用的局部变量时产生错误
+    "noUnusedParameters": true, // 在声明但未使用函数参数时产生错误
+    "erasableSyntaxOnly": true, //强制只使用 “可擦除” 的 TypeScript 语法，禁止任何会生成额外 JS 运行时代码的 TS 特性，让代码能被 Node.js 原生直接运行（无需 tsc 编译）TypeScript
+    "noFallthroughCasesInSwitch": true, //只要有 switch 语句中缺少 break 或 return 关键字，这个编译选项就会生成错误
+    "noUncheckedSideEffectImports": true, //检查带有副作用的 import；这有助于清理无用的 import。
     "baseUrl": "./", //默认当前目录
     "paths": {
       //路径映射
-      "@/*": ["src/*"]
+      "@/*": ["src/*"],
+      "#/*": ["src/types/*"]
     }
   },
   "include": [
@@ -26,5 +27,6 @@
     "vite.config.ts",
     "uno.config.ts"
   ],
-  "exclude": ["node_modules", "dist"]
+  "exclude": ["node_modules", "dist"],
+  "ignoreDeprecations": "6.0"
 }

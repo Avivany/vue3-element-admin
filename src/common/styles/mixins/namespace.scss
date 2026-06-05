@@ -1,0 +1,21 @@
+// block 命名空间
+$v-namespace: va !default;
+
+// element plus 命名空间
+$e-namespace: el !default;
+//通用分隔符
+$common-separator: '-' !default;
+//元素分隔符
+$element-separator: '__' !default;
+//修饰符分隔符
+$modifier-separator: '--' !default;
+//其他修前缀
+$is-state-prexfix: 'is-' !default;
+$no-state-prexfix: 'no-' !default;
+$has-state-prexfix: 'has-' !default;
+
+//自定义ElementPlus 样式命名空间
+//https://element-plus.org/zh-CN/guide/namespace.html
+@forward 'element-plus/theme-chalk/src/mixins/config.scss' with (
+  $namespace: #{$v-namespace}
+);
